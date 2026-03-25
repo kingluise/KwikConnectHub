@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - Find Top-Rated Local Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="font-['Inter'] antialiased text-gray-800 bg-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-md border-b border-gray-100 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center gap-2 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">
+                            KC
+                        </div>
+                        <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">KwikConnectHub</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Search -->
+                <div class="hidden lg:flex flex-1 max-w-2xl mx-8">
+                    <div class="relative w-full">
+                        <input type="text"
+                               id="searchInput"
+                               placeholder="What service do you need?"
+                               class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
+                        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-600 text-white px-6 py-1.5 rounded-full text-sm font-medium hover:bg-emerald-700 transition-colors">
+                            Search
+                        </button>
+                        <!-- Search Suggestions Dropdown -->
+                        <div id="searchSuggestions" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 hidden opacity-0 transform -translate-y-2 transition-all duration-200 z-50">
+                            <div class="p-4">
+                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Popular Searches</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="px-3 py-1.5 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700 rounded-lg text-sm transition-colors">Home Cleaning</button>
+                                    <button class="px-3 py-1.5 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700 rounded-lg text-sm transition-colors">Plumbing</button>
+                                    <button class="px-3 py-1.5 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700 rounded-lg text-sm transition-colors">Web Design</button>
+                                    <button class="px-3 py-1.5 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700 rounded-lg text-sm transition-colors">Photography</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="#" class="text-gray-600 hover:text-emerald-600 font-medium transition-colors">Become a Pro</a>
+                    <a href="#" class="text-gray-600 hover:text-emerald-600 font-medium transition-colors">Sign In</a>
+                    <button class="bg-emerald-600 text-white px-6 py-2.5 rounded-full font-medium hover:bg-emerald-700 hover:shadow-lg hover:shadow-emerald-200 transition-all">
+                        Join Now
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl">
+            <div class="px-4 py-6 space-y-4">
+                <input type="text" placeholder="Search services..." class="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <a href="#" class="block py-3 text-gray-700 font-medium border-b border-gray-100">Become a Pro</a>
+                <a href="#" class="block py-3 text-gray-700 font-medium border-b border-gray-100">Sign In</a>
+                <button class="w-full bg-emerald-600 text-white py-3 rounded-lg font-medium">Join Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 lg:pt-40 pb-16 lg:pb-24 bg-gradient-to-b from-emerald-50/50 to-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                <div class="space-y-8 z-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-emerald-100">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-sm font-medium text-emerald-800">5,000+ Services Completed Today</span>
+                    </div>
+
+                    <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                        Find the perfect <span class="text-emerald-600">local service</span> for your needs
+                    </h1>
+
+                    <p class="text-lg lg:text-xl text-gray-600 max-w-lg">
+                        Connect with verified professionals for home services, creative work, repairs, and more. Quality work, guaranteed.
+                    </p>
+
+                    <!-- Mobile Search (visible only on mobile) -->
+                    <div class="lg:hidden relative">
+                        <input type="text" placeholder="What service do you need?" class="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-600 text-white p-2 rounded-xl">
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <span class="text-sm text-gray-500">Popular:</span>
+                        <button class="text-sm text-gray-600 hover:text-emerald-600 hover:underline transition-colors">House Cleaning</button>
+                        <button class="text-sm text-gray-600 hover:text-emerald-600 hover:underline transition-colors">Plumbing</button>
+                        <button class="text-sm text-gray-600 hover:text-emerald-600 hover:underline transition-colors">Electrical</button>
+                        <button class="text-sm text-gray-600 hover:text-emerald-600 hover:underline transition-colors">Web Design</button>
+                    </div>
+
+                    <div class="flex items-center gap-4 pt-4">
+                        <div class="flex -space-x-3">
+                            <img src="http://static.photos/people/200x200/1" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <img src="http://static.photos/people/200x200/2" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <img src="http://static.photos/people/200x200/3" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover">
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-700">+2k</div>
+                        </div>
+                        <div class="text-sm">
+                            <div class="flex items-center gap-1 text-amber-400">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <span class="text-gray-900 font-semibold ml-1">4.9</span>
+                            </div>
+                            <p class="text-gray-500">from 12,000+ reviews</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative lg:h-[600px] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-emerald-200/30 to-teal-200/30 rounded-3xl transform rotate-3"></div>
+                    <img src="http://static.photos/workspace/640x360/1" alt="Professional at work" class="relative rounded-2xl shadow-2xl w-full h-full object-cover">
+
+                    <!-- Floating Cards -->
+                    <div class="absolute -left-4 lg:-left-12 top-1/4 bg-white p-4 rounded-2xl shadow-xl animate-float">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Verified Pros</p>
+                                <p class="text-sm text-gray-500">Background checked</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -right-4 lg:-right-8 bottom-1/4 bg-white p-4 rounded-2xl shadow-xl animate-float-delayed">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-amber-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900">Satisfaction</p>
+                                <p class="text-sm text-gray-500">Money-back guarantee</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Browse by Category</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our wide range of professional services tailored to your needs</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+                <a href="#" class="group p-6 bg-gray-50 rounded-2xl hover:bg-emerald-50 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg transition-shadow">
+                        <i data-lucide="home" class="w-7 h-7 text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Home Services</h3>
+                    <p class="text-sm text-gray-500">2.4k pros</p>
+                </a>
+
+                <a href="#" class="group p-6 bg-gray-50 rounded-2xl hover:bg-emerald-50 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg transition-shadow">
+                        <i data-lucide="droplets" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Cleaning</h3>
+                    <p class="text-sm text-gray-500">1.8k pros</p>
+                </a>
+
+                <a href="#" class="group p-6 bg-gray-50 rounded-2xl hover:bg-emerald-50 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg transition-shadow">
+                        <i data-lucide="wrench" class="w-7 h-7 text-orange-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Repairs</h3>
+                    <p class="text-sm text-gray-500">3.1k pros</p>
+                </a>
+
+                <a href="#" class="group p-6 bg-gray-50 rounded-2xl hover:bg-emerald-50 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg transition-shadow">
+                        <i data-lucide="paintbrush" class="w-7 h-7 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Design</h3>
+                    <p class="text-sm text-gray-500">950 pros</p>
+                </a>
+
+                <a href="#" class="group p-6 bg-gray-50 rounded-2xl hover:bg-emerald-50 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg transition-shadow">
+                        <i data-lucide="camera" class="w-7 h-7 text-pink-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Events</h3>
+                    <p class="text-sm text-gray-500">720 pros</p>
+                </a>
+
+                <a href="#" class="group p-6 bg-gray-50 rounded-2xl hover:bg-emerald-50 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg transition-shadow">
+                        <i data-lucide="cpu" class="w-7 h-7 text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Tech</h3>
+                    <p class="text-sm text-gray-500">1.2k pros</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Services -->
+    <section class="py-16 lg:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
+                <div>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Featured Services</h2>
+                    <p class="text-gray-600">Top-rated professionals ready to help</p>
+                </div>
+                <div class="flex gap-2">
+                    <button id="prevBtn" class="p-3 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow disabled:opacity-50">
+                        <i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                    <button id="nextBtn" class="p-3 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow disabled:opacity-50">
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="servicesGrid">
+                <!-- Service Card 1 -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="http://static.photos/indoor/640x360/1" alt="Service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-800">
+                            Top Rated
+                        </div>
+                        <button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+                            <i data-lucide="heart" class="w-4 h-4 text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <img src="http://static.photos/people/200x200/4" alt="Provider" class="w-8 h-8 rounded-full object-cover">
+                            <span class="text-sm font-medium text-gray-700">Sarah M.</span>
+                            <span class="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-0.5 rounded-full">Pro</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Professional Home Deep Cleaning Service</h3>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-current"></i>
+                            <span class="text-sm font-medium text-gray-900">4.9</span>
+                            <span class="text-sm text-gray-500">(128 reviews)</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <span class="text-xs text-gray-500">Starting at</span>
+                            <span class="text-lg font-bold text-gray-900">$85</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="http://static.photos/technology/640x360/1" alt="Service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+                            <i data-lucide="heart" class="w-4 h-4 text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <img src="http://static.photos/people/200x200/5" alt="Provider" class="w-8 h-8 rounded-full object-cover">
+                            <span class="text-sm font-medium text-gray-700">Alex K.</span>
+                            <span class="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-0.5 rounded-full">Pro</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Expert Plumbing Repair & Installation</h3>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-current"></i>
+                            <span class="text-sm font-medium text-gray-900">5.0</span>
+                            <span class="text-sm text-gray-500">(89 reviews)</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <span class="text-xs text-gray-500">Starting at</span>
+                            <span class="text-lg font-bold text-gray-900">$120</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="http://static.photos/workspace/640x360/2" alt="Service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 left-3 bg-amber-100 px-3 py-1 rounded-full text-xs font-semibold text-amber-800">
+                            Popular
+                        </div>
+                        <button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+                            <i data-lucide="heart" class="w-4 h-4 text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <img src="http://static.photos/people/200x200/6" alt="Provider" class="w-8 h-8 rounded-full object-cover">
+                            <span class="text-sm font-medium text-gray-700">Maria L.</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Modern Website Design & Development</h3>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-current"></i>
+                            <span class="text-sm font-medium text-gray-900">4.8</span>
+                            <span class="text-sm text-gray-500">(234 reviews)</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <span class="text-xs text-gray-500">Starting at</span>
+                            <span class="text-lg font-bold text-gray-900">$299</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="http://static.photos/outdoor/640x360/1" alt="Service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <button class="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
+                            <i data-lucide="heart" class="w-4 h-4 text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <img src="http://static.photos/people/200x200/7" alt="Provider" class="w-8 h-8 rounded-full object-cover">
+                            <span class="text-sm font-medium text-gray-700">John D.</span>
+                            <span class="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-0.5 rounded-full">Pro</span>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">Garden Landscaping & Maintenance</h3>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-current"></i>
+                            <span class="text-sm font-medium text-gray-900">4.9</span>
+                            <span class="text-sm text-gray-500">(67 reviews)</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                            <span class="text-xs text-gray-500">Starting at</span>
+                            <span class="text-lg font-bold text-gray-900">$150</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <button class="inline-flex items-center gap-2 px-8 py-3 bg-white border border-gray-300 rounded-full font-medium text-gray-700 hover:border-emerald-500 hover:text-emerald-600 transition-colors">
+                    View All Services
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Get your service done in 3 simple steps</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                <!-- Connection Line (desktop only) -->
+                <div class="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-200 -translate-y-1/2 z-0"></div>
+
+                <div class="relative z-10 text-center">
+                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                        <span class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                        <i data-lucide="search" class="w-8 h-8 text-emerald-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Search & Select</h3>
+                    <p class="text-gray-600">Browse through our categories or search for the specific service you need.</p>
+                </div>
+
+                <div class="relative z-10 text-center">
+                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                        <span class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                        <i data-lucide="calendar" class="w-8 h-8 text-emerald-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Book & Schedule</h3>
+                    <p class="text-gray-600">Choose your preferred professional and schedule a time that works for you.</p>
+                </div>
+
+                <div class="relative z-10 text-center">
+                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                        <span class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                        <i data-lucide="check-circle" class="w-8 h-8 text-emerald-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Relax & Enjoy</h3>
+                    <p class="text-gray-600">Sit back while our verified professionals handle your service needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust/Stats Section -->
+    <section class="py-16 bg-emerald-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl lg:text-5xl font-bold mb-2">50k+</div>
+                    <div class="text-emerald-200">Verified Professionals</div>
+                </div>
+                <div>
+                    <div class="text-4xl lg:text-5xl font-bold mb-2">1M+</div>
+                    <div class="text-emerald-200">Services Completed</div>
+                </div>
+                <div>
+                    <div class="text-4xl lg:text-5xl font-bold mb-2">4.9</div>
+                    <div class="text-emerald-200">Average Rating</div>
+                </div>
+                <div>
+                    <div class="text-4xl lg:text-5xl font-bold mb-2">24/7</div>
+                    <div class="text-emerald-200">Customer Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 lg:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
+                <p class="text-gray-600">Trusted by thousands of happy customers</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Amazing service! The plumber arrived on time, was professional, and fixed our leaking pipe quickly. Highly recommend!"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="http://static.photos/people/200x200/8" alt="User" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-gray-900">Jennifer Adams</div>
+                            <div class="text-sm text-gray-500">Home Cleaning Service</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Found a great web designer for my small business. The process was smooth and the results exceeded my expectations!"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="http://static.photos/people/200x200/9" alt="User" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-gray-900">Michael Chen</div>
+                            <div class="text-sm text-gray-500">Web Design Service</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 text-amber-400 fill-current"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The electrician was knowledgeable and efficient. Fair pricing and excellent work. Will definitely use again!"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="http://static.photos/people/200x200/10" alt="User" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-gray-900">Sarah Johnson</div>
+                            <div class="text-sm text-gray-500">Electrical Service</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 lg:py-24 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-8 lg:p-16 text-center text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+                <div class="relative z-10">
+                    <h2 class="text-3xl lg:text-4xl font-bold mb-4">Ready to grow your business?</h2>
+                    <p class="text-emerald-100 text-lg mb-8 max-w-2xl mx-auto">Join thousands of professionals earning on ServiceHub. Set your own schedule and prices.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="px-8 py-4 bg-white text-emerald-600 rounded-full font-semibold hover:shadow-lg transition-shadow">
+                            Become a Provider
+                        </button>
+                        <button class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-colors">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold">S</div>
+                        <span class="text-xl font-bold text-white">ServiceHub</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-sm">Connecting you with verified professionals for all your service needs. Quality work, guaranteed satisfaction.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Services</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Home Cleaning</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Plumbing</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Electrical</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Design</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Moving</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Press</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Safety</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-500">© 2024 ServiceHub. All rights reserved.</p>
+                <div class="flex items-center gap-6 text-sm text-gray-500">
+                    <span>Made with care for communities worldwide</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
