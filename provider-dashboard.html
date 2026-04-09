@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - Provider Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/provider-dashboard.css">
+</head>
+<body>
+
+    <!-- ══════════════════════════════
+         NAVBAR
+    ══════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">KC</div>
+                <span class="nav-logo-text">KwikConnectHub</span>
+            </a>
+            <div class="nav-spacer"></div>
+            <div class="nav-right">
+                <button class="nav-icon-btn" title="Notifications">
+                    <i data-lucide="bell"></i>
+                    <span class="notif-dot"></span>
+                </button>
+                <div class="nav-avatar-wrap" id="navAvatarWrap">
+                    <div class="nav-avatar" id="navAvatar">P</div>
+                    <span class="nav-username" id="navUsername">Provider</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                    <div class="nav-dropdown" id="navDropdown">
+                        <a href="profile-settings.html" class="dropdown-item"><i data-lucide="user"></i> Profile</a>
+                        <a href="profile-settings.html" class="dropdown-item"><i data-lucide="settings"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html" class="dropdown-item dropdown-logout"><i data-lucide="log-out"></i> Sign Out</a>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-mobile-btn" id="sidebarToggle">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+
+        <!-- ══════════════════════════════
+             SIDEBAR
+        ══════════════════════════════ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-avatar" id="sidebarAvatar">P</div>
+                <div class="sidebar-profile-info">
+                    <div class="sidebar-name" id="sidebarName">Provider Name</div>
+                    <div class="sidebar-role">Service Provider</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="gigs">
+                    <i data-lucide="briefcase"></i>
+                    <span>My Gigs</span>
+                    <span class="sidebar-badge" id="gigsBadge"></span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="orders">
+                    <i data-lucide="shopping-bag"></i>
+                    <span>Orders</span>
+                    <span class="sidebar-badge" id="ordersBadge"></span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="earnings">
+                    <i data-lucide="wallet"></i>
+                    <span>Earnings</span>
+                </a>
+                <a href="messages.html" class="sidebar-link">
+                    <i data-lucide="message-circle"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="reviews">
+                    <i data-lucide="star"></i>
+                    <span>Reviews</span>
+                </a>
+                <div class="sidebar-divider"></div>
+                <a href="profile-settings.html" class="sidebar-link">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="index.html" class="sidebar-link sidebar-logout">
+                    <i data-lucide="log-out"></i>
+                    <span>Sign Out</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Sidebar overlay (mobile) -->
+        <div class="sidebar-overlay hidden" id="sidebarOverlay"></div>
+
+        <!-- ══════════════════════════════
+             MAIN CONTENT
+        ══════════════════════════════ -->
+        <main class="dashboard-main">
+
+            <!-- ── OVERVIEW SECTION ── -->
+            <section class="dash-section active" id="section-overview">
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title" id="welcomeTitle">Welcome back!</h1>
+                        <p class="section-subtitle">Here's what's happening with your services today.</p>
+                    </div>
+                    <a href="create-gig.html" class="primary-btn">
+                        <i data-lucide="plus"></i>
+                        Create New Gig
+                    </a>
+                </div>
+
+                <!-- Stats row -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon emerald">
+                            <i data-lucide="wallet"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Total Earnings</span>
+                            <span class="stat-value" id="statEarnings">—</span>
+                            <span class="stat-change" id="statEarningsChange"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i data-lucide="shopping-bag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Active Orders</span>
+                            <span class="stat-value" id="statActiveOrders">—</span>
+                            <span class="stat-change" id="statActiveChange"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i data-lucide="check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Completed Jobs</span>
+                            <span class="stat-value" id="statCompleted">—</span>
+                            <span class="stat-change" id="statCompletedChange"></span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber">
+                            <i data-lucide="star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Average Rating</span>
+                            <span class="stat-value" id="statRating">—</span>
+                            <span class="stat-change" id="statRatingChange"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent Orders</h2>
+                        <button class="text-btn" onclick="switchSection('orders')">View All</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table" id="recentOrdersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Buyer</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersBody">
+                                <!-- TODO: Populated by JS from API -->
+                            </tbody>
+                        </table>
+                        <div class="empty-table" id="recentOrdersEmpty">
+                            <i data-lucide="inbox"></i>
+                            <p>No orders yet. Share your gigs to start receiving orders!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Gigs -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">My Gigs</h2>
+                        <a href="create-gig.html" class="text-btn">+ Add New</a>
+                    </div>
+                    <div class="gigs-grid" id="gigsGrid">
+                        <!-- TODO: Populated by JS from API -->
+                    </div>
+                    <div class="empty-state" id="gigsEmpty">
+                        <i data-lucide="briefcase"></i>
+                        <h3>No gigs yet</h3>
+                        <p>Create your first gig to start earning</p>
+                        <a href="create-gig.html" class="primary-btn">Create a Gig</a>
+                    </div>
+                </div>
+
+                <!-- Earnings Chart -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Earnings Overview</h2>
+                        <select class="mini-select" id="earningsRange">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 3 months</option>
+                        </select>
+                    </div>
+                    <div class="chart-area" id="earningsChart">
+                        <!-- TODO: Connect chart library (e.g. Chart.js) -->
+                        <div class="chart-placeholder">
+                            <i data-lucide="bar-chart-2"></i>
+                            <p>Earnings chart will appear here</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Reviews -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent Reviews</h2>
+                        <button class="text-btn" onclick="switchSection('reviews')">View All</button>
+                    </div>
+                    <div class="reviews-list" id="recentReviewsList">
+                        <!-- TODO: Populated by JS from API -->
+                    </div>
+                    <div class="empty-state" id="reviewsEmpty">
+                        <i data-lucide="star"></i>
+                        <h3>No reviews yet</h3>
+                        <p>Complete orders to start receiving reviews</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── GIGS SECTION ── -->
+            <section class="dash-section hidden" id="section-gigs">
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title">My Gigs</h1>
+                        <p class="section-subtitle">Manage your service listings</p>
+                    </div>
+                    <a href="create-gig.html" class="primary-btn">
+                        <i data-lucide="plus"></i>
+                        Create New Gig
+                    </a>
+                </div>
+                <div class="gigs-grid" id="allGigsGrid">
+                    <!-- TODO: Populated by JS from API -->
+                </div>
+                <div class="empty-state" id="allGigsEmpty">
+                    <i data-lucide="briefcase"></i>
+                    <h3>No gigs yet</h3>
+                    <p>Create your first gig to start earning on KwikConnectHub</p>
+                    <a href="create-gig.html" class="primary-btn">Create a Gig</a>
+                </div>
+            </section>
+
+            <!-- ── ORDERS SECTION ── -->
+            <section class="dash-section hidden" id="section-orders">
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title">Orders</h1>
+                        <p class="section-subtitle">Track and manage your service orders</p>
+                    </div>
+                    <div class="filter-row">
+                        <select class="mini-select" id="orderStatusFilter">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="table-wrap">
+                        <table class="data-table" id="allOrdersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Buyer</th>
+                                    <th>Service</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allOrdersBody">
+                                <!-- TODO: Populated by JS from API -->
+                            </tbody>
+                        </table>
+                        <div class="empty-table" id="allOrdersEmpty">
+                            <i data-lucide="inbox"></i>
+                            <p>No orders found</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── EARNINGS SECTION ── -->
+            <section class="dash-section hidden" id="section-earnings">
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title">Earnings</h1>
+                        <p class="section-subtitle">Track your income and payouts</p>
+                    </div>
+                    <button class="primary-btn" id="withdrawBtn">
+                        <i data-lucide="arrow-up-right"></i>
+                        Withdraw Funds
+                    </button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon emerald"><i data-lucide="wallet"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Available Balance</span>
+                            <span class="stat-value" id="availableBalance">—</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i data-lucide="clock"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Pending Clearance</span>
+                            <span class="stat-value" id="pendingBalance">—</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i data-lucide="trending-up"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">This Month</span>
+                            <span class="stat-value" id="monthlyEarnings">—</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i data-lucide="coins"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">All Time</span>
+                            <span class="stat-value" id="totalEarnings">—</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Transaction History</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Order ID</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionsBody">
+                                <!-- TODO: Populated by JS from API -->
+                            </tbody>
+                        </table>
+                        <div class="empty-table" id="transactionsEmpty">
+                            <i data-lucide="receipt"></i>
+                            <p>No transactions yet</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── REVIEWS SECTION ── -->
+            <section class="dash-section hidden" id="section-reviews">
+                <div class="section-header">
+                    <div>
+                        <h1 class="section-title">Reviews</h1>
+                        <p class="section-subtitle">See what your clients are saying</p>
+                    </div>
+                </div>
+                <div class="reviews-summary-card" id="reviewsSummaryCard">
+                    <!-- TODO: Populated by JS from API -->
+                    <div class="empty-state">
+                        <i data-lucide="star"></i>
+                        <h3>No reviews yet</h3>
+                        <p>Complete orders to start receiving reviews from buyers</p>
+                    </div>
+                </div>
+                <div class="reviews-full-list" id="allReviewsList">
+                    <!-- TODO: Populated by JS from API -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i data-lucide="check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="js/provider-dashboard.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

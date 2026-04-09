@@ -1,0 +1,87 @@
+:root {
+    --emerald: #059669;
+    --emerald-light: #d1fae5;
+    --emerald-dark: #065f46;
+    --teal: #0d9488;
+    --surface: #f8faf9;
+    --white: #ffffff;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --border-light: #f3f4f6;
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Password Strength Bars */
+.password-strength-bar.weak {
+    background-color: #ef4444;
+}
+
+.password-strength-bar.fair {
+    background-color: #f59e0b;
+}
+
+.password-strength-bar.good {
+    background-color: #3b82f6;
+}
+
+.password-strength-bar.strong {
+    background-color: #10b981;
+}
+
+/* Tab Transitions */
+.tab-content {
+    transition: opacity 0.3s ease;
+}
+
+/* Form Input Focus */
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+}
+
+/* Toast Notifications */
+.toast {
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+/* Role Selector Animation */
+input[type="radio"]:checked + div {
+    border-color: var(--emerald);
+    background-color: var(--emerald-light);
+}
+
+input[type="radio"]:checked + div svg {
+    color: var(--emerald);
+}
+
+/* Smooth transitions */
+button {
+    transition: all 0.2s ease;
+}
+
+/* Error states */
+input.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}

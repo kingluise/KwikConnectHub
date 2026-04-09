@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - Create a Gig</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/create-gig.css">
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">KC</div>
+                <span class="nav-logo-text">KwikConnectHub</span>
+            </a>
+            <div class="nav-spacer"></div>
+            <a href="provider-dashboard.html" class="nav-link">
+                <i data-lucide="arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <main class="create-gig-main">
+        <div class="create-gig-inner">
+
+            <!-- Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="provider-dashboard.html">Dashboard</a>
+                    <i data-lucide="chevron-right"></i>
+                    <span id="pageHeaderTitle">Create New Gig</span>
+                </div>
+                <h1 class="page-title" id="pageTitle">Create a New Gig</h1>
+                <p class="page-subtitle">Fill in the details below to list your service</p>
+            </div>
+
+            <!-- Step indicator -->
+            <div class="step-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span class="step-label">Basic Info</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">Pricing</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">Media</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <span class="step-label">Review</span>
+                </div>
+            </div>
+
+            <!-- ── STEP 1: BASIC INFO ── -->
+            <div class="form-step active" id="step-1">
+                <div class="form-card">
+                    <h2 class="form-section-title">Basic Information</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gigTitle">Gig Title <span class="required">*</span></label>
+                        <input type="text" id="gigTitle" class="form-input" placeholder="e.g. I will professionally clean your home" maxlength="80">
+                        <div class="input-hint"><span id="gigTitleCount">0</span>/80 characters</div>
+                        <p class="error-msg" id="gigTitleErr">Please enter a gig title.</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="gigCategory">Category <span class="required">*</span></label>
+                            <div class="select-wrap">
+                                <select id="gigCategory" class="form-input form-select">
+                                    <option value="">Select a category</option>
+                                    <option value="home">Home Services</option>
+                                    <option value="cleaning">Cleaning</option>
+                                    <option value="repairs">Repairs</option>
+                                    <option value="design">Design</option>
+                                    <option value="tech">Tech & IT</option>
+                                    <option value="events">Events</option>
+                                    <option value="education">Education</option>
+                                </select>
+                                <i data-lucide="chevron-down" class="select-icon"></i>
+                            </div>
+                            <p class="error-msg" id="gigCategoryErr">Please select a category.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="gigSubcategory">Subcategory</label>
+                            <div class="select-wrap">
+                                <select id="gigSubcategory" class="form-input form-select">
+                                    <option value="">Select subcategory</option>
+                                </select>
+                                <i data-lucide="chevron-down" class="select-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gigLocation">Service Location <span class="required">*</span></label>
+                        <div class="input-with-icon">
+                            <i data-lucide="map-pin" class="input-icon"></i>
+                            <input type="text" id="gigLocation" class="form-input icon-input" placeholder="e.g. Lagos, Nigeria">
+                        </div>
+                        <p class="error-msg" id="gigLocationErr">Please enter a location.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gigDescription">Description <span class="required">*</span></label>
+                        <textarea id="gigDescription" class="form-textarea" rows="6" placeholder="Describe your service in detail. What will you do? What makes you different? What should buyers expect?" maxlength="1200"></textarea>
+                        <div class="input-hint"><span id="gigDescCount">0</span>/1200 characters</div>
+                        <p class="error-msg" id="gigDescErr">Please write a description (minimum 100 characters).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tags</label>
+                        <div class="tags-input-wrap">
+                            <div class="tags-list" id="tagsList"></div>
+                            <input type="text" id="tagInput" class="tags-input" placeholder="Type a tag and press Enter">
+                        </div>
+                        <div class="input-hint">Add up to 5 tags to help buyers find your gig</div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <div></div>
+                    <button class="primary-btn" onclick="goToStep(2)">
+                        Continue to Pricing
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── STEP 2: PRICING ── -->
+            <div class="form-step hidden" id="step-2">
+                <div class="form-card">
+                    <h2 class="form-section-title">Pricing Plans</h2>
+                    <p class="form-section-desc">Set up to 3 pricing tiers for your service</p>
+
+                    <div class="pricing-plans">
+                        <!-- Basic Plan -->
+                        <div class="plan-form-card">
+                            <div class="plan-form-header">
+                                <div class="plan-dot basic"></div>
+                                <h3>Basic Plan</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Plan Name</label>
+                                    <input type="text" class="form-input" id="basicName" value="Basic" placeholder="e.g. Starter">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Price ($) <span class="required">*</span></label>
+                                    <div class="input-with-icon">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" class="form-input prefix-input" id="basicPrice" placeholder="0" min="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-textarea" id="basicDesc" rows="2" placeholder="Brief description of this plan"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delivery Time</label>
+                                <input type="text" class="form-input" id="basicDelivery" placeholder="e.g. 2-3 hours">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What's Included</label>
+                                <div class="features-list" id="basicFeatures"></div>
+                                <div class="add-feature-row">
+                                    <input type="text" class="form-input" id="basicFeatureInput" placeholder="Add a feature and press Enter">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Standard Plan -->
+                        <div class="plan-form-card">
+                            <div class="plan-form-header">
+                                <div class="plan-dot standard"></div>
+                                <h3>Standard Plan</h3>
+                                <span class="plan-optional">Optional</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Plan Name</label>
+                                    <input type="text" class="form-input" id="standardName" value="Standard" placeholder="e.g. Professional">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Price ($)</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" class="form-input prefix-input" id="standardPrice" placeholder="0" min="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-textarea" id="standardDesc" rows="2" placeholder="Brief description of this plan"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delivery Time</label>
+                                <input type="text" class="form-input" id="standardDelivery" placeholder="e.g. 4-5 hours">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What's Included</label>
+                                <div class="features-list" id="standardFeatures"></div>
+                                <div class="add-feature-row">
+                                    <input type="text" class="form-input" id="standardFeatureInput" placeholder="Add a feature and press Enter">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Premium Plan -->
+                        <div class="plan-form-card">
+                            <div class="plan-form-header">
+                                <div class="plan-dot premium"></div>
+                                <h3>Premium Plan</h3>
+                                <span class="plan-optional">Optional</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Plan Name</label>
+                                    <input type="text" class="form-input" id="premiumName" value="Premium" placeholder="e.g. Elite">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Price ($)</label>
+                                    <div class="input-with-icon">
+                                        <span class="input-prefix">$</span>
+                                        <input type="number" class="form-input prefix-input" id="premiumPrice" placeholder="0" min="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-textarea" id="premiumDesc" rows="2" placeholder="Brief description of this plan"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delivery Time</label>
+                                <input type="text" class="form-input" id="premiumDelivery" placeholder="e.g. Full day">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What's Included</label>
+                                <div class="features-list" id="premiumFeatures"></div>
+                                <div class="add-feature-row">
+                                    <input type="text" class="form-input" id="premiumFeatureInput" placeholder="Add a feature and press Enter">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="secondary-btn" onclick="goToStep(1)">
+                        <i data-lucide="arrow-left"></i>
+                        Back
+                    </button>
+                    <button class="primary-btn" onclick="goToStep(3)">
+                        Continue to Media
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── STEP 3: MEDIA ── -->
+            <div class="form-step hidden" id="step-3">
+                <div class="form-card">
+                    <h2 class="form-section-title">Gig Images</h2>
+                    <p class="form-section-desc">Upload up to 5 images showcasing your work. First image will be the cover.</p>
+
+                    <div class="upload-area" id="uploadArea">
+                        <i data-lucide="upload-cloud"></i>
+                        <h3>Drag & drop images here</h3>
+                        <p>or click to browse</p>
+                        <span class="upload-formats">JPG, PNG, WEBP — Max 5MB each</span>
+                        <input type="file" id="imageUpload" accept="image/*" multiple class="hidden">
+                    </div>
+
+                    <div class="image-previews" id="imagePreviews"></div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="secondary-btn" onclick="goToStep(2)">
+                        <i data-lucide="arrow-left"></i>
+                        Back
+                    </button>
+                    <button class="primary-btn" onclick="goToStep(4)">
+                        Review & Publish
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── STEP 4: REVIEW ── -->
+            <div class="form-step hidden" id="step-4">
+                <div class="form-card">
+                    <h2 class="form-section-title">Review Your Gig</h2>
+                    <p class="form-section-desc">Check everything looks right before publishing</p>
+                    <div class="review-summary" id="reviewSummary">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="secondary-btn" onclick="goToStep(3)">
+                        <i data-lucide="arrow-left"></i>
+                        Back
+                    </button>
+                    <div style="display:flex;gap:0.75rem;">
+                        <button class="secondary-btn" id="saveDraftBtn">
+                            <i data-lucide="save"></i>
+                            Save as Draft
+                        </button>
+                        <button class="primary-btn" id="publishBtn">
+                            <i data-lucide="send"></i>
+                            Publish Gig
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="toast" id="toast">
+        <i data-lucide="check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="js/create-gig.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

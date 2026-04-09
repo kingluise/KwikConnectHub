@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Services - KwikConnectHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/services.css">
+</head>
+<body class="font-inter antialiased bg-surface text-text">
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-border h-[68px] transition-shadow duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex items-center justify-between h-full">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
+                        KC
+                    </div>
+                    <span class="text-xl font-bold text-text tracking-tight">KwikConnectHub</span>
+                </a>
+
+                <!-- Desktop Search -->
+                <div class="hidden md:flex flex-1 max-w-xl mx-8">
+                    <div class="relative w-full">
+                        <input type="text" id="navSearch" placeholder="What service do you need?" class="w-full pl-12 pr-4 py-2.5 rounded-full border border-border bg-white focus:outline-none focus:ring-[3px] focus:ring-emerald-100 focus:border-emerald-500 transition-all">
+                        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted"></i>
+                    </div>
+                </div>
+
+                <!-- Nav Actions -->
+                <div class="flex items-center gap-4">
+                    <div class="nav-logged-out hidden items-center gap-4">
+                        <a href="auth.html" class="text-text font-medium hover:text-emerald-600 transition-colors">Sign In</a>
+                        <a href="auth.html" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-medium rounded-full hover:shadow-lg hover:shadow-emerald-200 transition-all transform hover:-translate-y-0.5">
+                            Join Now
+                        </a>
+                    </div>
+                    <div class="nav-logged-in hidden items-center gap-4">
+                        <button class="relative p-2 text-text-muted hover:text-text transition-colors">
+                            <i data-lucide="bell" class="w-6 h-6"></i>
+                            <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+                        <div class="relative">
+                            <button id="userMenuBtn" class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors">
+                                <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-semibold text-sm">JD</div>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-text-muted"></i>
+                            </button>
+                            <div id="userDropdown" class="hidden absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-xl border border-border py-2">
+                                <a href="buyer-dashboard.html" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"><i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Dashboard</span></a>
+                                <a href="profile-settings.html" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"><i data-lucide="settings" class="w-4 h-4"></i><span>Settings</span></a>
+                                <div class="border-t border-border my-2"></div>
+                                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"><i data-lucide="log-out" class="w-4 h-4"></i><span>Sign Out</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="mobileMenuBtn" class="lg:hidden p-2 text-text hover:text-emerald-600 transition-colors">
+                        <i data-lucide="menu" class="w-6 h-6" id="menuIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="pt-28 pb-6 bg-white border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-2 text-sm text-text-muted mb-4">
+                <a href="index.html" class="hover:text-emerald-600">Home</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span id="breadcrumbCategory" class="text-text">All Services</span>
+            </nav>
+            <h1 id="pageTitle" class="text-3xl font-bold text-text mb-2">All Services</h1>
+            <p class="text-text-muted">Find the perfect professional for your needs</p>
+
+            <!-- Active Filters -->
+            <div id="activeFilters" class="flex flex-wrap gap-2 mt-4 hidden">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex gap-8">
+            <!-- Sidebar Filters -->
+            <aside class="hidden lg:block w-[260px] flex-shrink-0">
+                <div class="sticky top-28 space-y-6">
+                    <!-- Categories -->
+                    <div class="bg-white rounded-2xl border border-border p-5">
+                        <h3 class="font-semibold text-text mb-4">Categories</h3>
+                        <div class="space-y-2" id="categoryFilters">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="bg-white rounded-2xl border border-border p-5">
+                        <h3 class="font-semibold text-text mb-4">Price Range</h3>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="relative flex-1">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">$</span>
+                                <input type="number" id="minPrice" placeholder="Min" class="w-full pl-7 pr-3 py-2 rounded-xl border border-border focus:outline-none focus:ring-[3px] focus:ring-emerald-100 focus:border-emerald-500 text-sm">
+                            </div>
+                            <span class="text-text-muted">-</span>
+                            <div class="relative flex-1">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">$</span>
+                                <input type="number" id="maxPrice" placeholder="Max" class="w-full pl-7 pr-3 py-2 rounded-xl border border-border focus:outline-none focus:ring-[3px] focus:ring-emerald-100 focus:border-emerald-500 text-sm">
+                            </div>
+                        </div>
+                        <input type="range" class="w-full accent-emerald-500" min="0" max="1000" value="1000">
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="bg-white rounded-2xl border border-border p-5">
+                        <h3 class="font-semibold text-text mb-4">Minimum Rating</h3>
+                        <div class="space-y-2" id="ratingFilters">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="rating" value="4.5" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex items-center gap-1">
+                                    <div class="flex"><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i></div>
+                                    <span class="text-sm text-text-muted">4.5 & up</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="rating" value="4" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex items-center gap-1">
+                                    <div class="flex"><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 text-gray-300"></i></div>
+                                    <span class="text-sm text-text-muted">4.0 & up</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="rating" value="3" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                <div class="flex items-center gap-1">
+                                    <div class="flex"><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></i><i data-lucide="star" class="w-4 h-4 text-gray-300"></i><i data-lucide="star" class="w-4 h-4 text-gray-300"></i></div>
+                                    <span class="text-sm text-text-muted">3.0 & up</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Provider Type -->
+                    <div class="bg-white rounded-2xl border border-border p-5">
+                        <h3 class="font-semibold text-text mb-4">Provider Type</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-sm">Verified Pros only</span>
+                                <input type="checkbox" id="verifiedOnly" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                            </label>
+                            <label class="flex items-center justify-between cursor-pointer">
+                                <span class="text-sm">Top Rated only</span>
+                                <input type="checkbox" id="topRatedOnly" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="clearAllFilters()" class="w-full py-2.5 text-emerald-600 font-medium hover:bg-emerald-50 rounded-xl transition-colors">
+                        Clear All Filters
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Results Area -->
+            <main class="flex-1">
+                <!-- Toolbar -->
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white rounded-2xl border border-border p-4">
+                    <div class="flex items-center gap-4">
+                        <span id="resultsCount" class="text-sm text-text-muted">0 results</span>
+                        <button onclick="openMobileFilters()" class="lg:hidden flex items-center gap-2 px-4 py-2 border border-border rounded-xl hover:bg-gray-50">
+                            <i data-lucide="filter" class="w-4 h-4"></i>
+                            <span>Filters</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <select id="sortSelect" onchange="handleSort()" class="px-4 py-2 rounded-xl border border-border focus:outline-none focus:ring-[3px] focus:ring-emerald-100 focus:border-emerald-500 text-sm">
+                            <option value="recommended">Recommended</option>
+                            <option value="rating">Highest Rated</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="reviews">Most Reviews</option>
+                        </select>
+                        <div class="hidden sm:flex items-center border border-border rounded-xl p-1">
+                            <button onclick="setView('grid')" id="gridViewBtn" class="p-2 rounded-lg bg-emerald-50 text-emerald-600"><i data-lucide="grid-3x3" class="w-4 h-4"></i></button>
+                            <button onclick="setView('list')" id="listViewBtn" class="p-2 rounded-lg text-text-muted hover:text-text"><i data-lucide="list" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services Grid -->
+                <div id="servicesGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Injected by JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden text-center py-16">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-100 flex items-center justify-center">
+                        <i data-lucide="search-x" class="w-10 h-10 text-text-muted"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text mb-2">No services found</h3>
+                    <p class="text-text-muted mb-6">Try adjusting your filters or search terms</p>
+                    <button onclick="clearAllFilters()" class="px-6 py-3 bg-emerald-500 text-white rounded-full font-medium hover:bg-emerald-600 transition-colors">
+                        Clear Filters
+                    </button>
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="flex items-center justify-center gap-2 mt-8 hidden">
+                    <button onclick="changePage('prev')" class="p-2 rounded-xl border border-border hover:bg-gray-50 disabled:opacity-50" id="prevPage"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                    <div id="pageNumbers" class="flex items-center gap-1"></div>
+                    <button onclick="changePage('next')" class="p-2 rounded-xl border border-border hover:bg-gray-50 disabled:opacity-50" id="nextPage"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Filter Drawer -->
+    <div id="mobileFilterDrawer" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50" onclick="closeMobileFilters()"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-80 bg-white overflow-y-auto p-6 transform transition-transform translate-x-full" id="mobileFilterContent">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-semibold text-lg">Filters</h3>
+                <button onclick="closeMobileFilters()" class="p-2 hover:bg-gray-100 rounded-lg"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <!-- Mobile filter content - cloned from sidebar -->
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <script src="js/services.js"></script>
+</body>
+</html>
