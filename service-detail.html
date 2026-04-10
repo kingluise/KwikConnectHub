@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/servicedetail.css">
+    <link rel="stylesheet" href="css/service-detail.css">
 </head>
 <body>
 
@@ -25,8 +25,8 @@
             <div class="nav-search-wrap">
                 <div class="nav-search">
                     <i data-lucide="search" class="nav-search-icon"></i>
-                    <input type="text" class="nav-search-input" placeholder="Search services...">
-                    <button class="nav-search-btn">Search</button>
+                    <input type="text" id="navSearchInput" class="nav-search-input" placeholder="Search services...">
+                    <button class="nav-search-btn" onclick="window.location.href='services.html?search='+document.getElementById('navSearchInput').value">Search</button>
                 </div>
             </div>
             <div class="nav-right">
@@ -62,8 +62,25 @@
     <!-- ══════════════════════════════
          MAIN CONTENT
     ══════════════════════════════ -->
-    <main class="detail-main">
-        <div class="detail-inner">
+    <main class="detail-main" id="detailMain">
+
+        <!-- Loading skeleton -->
+        <div class="skeleton-wrap" id="skeletonWrap">
+            <div class="detail-inner">
+                <div class="detail-left">
+                    <div class="skeleton skeleton-gallery"></div>
+                    <div class="skeleton skeleton-line long" style="margin-top:1.5rem;"></div>
+                    <div class="skeleton skeleton-line medium"></div>
+                    <div class="skeleton skeleton-line short"></div>
+                </div>
+                <div class="detail-right">
+                    <div class="skeleton skeleton-card-block"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actual content (hidden until loaded) -->
+        <div class="detail-inner hidden" id="detailContent">
 
             <!-- ── LEFT COLUMN ── -->
             <div class="detail-left">
@@ -78,12 +95,12 @@
                         <button class="gallery-nav gallery-next" id="galleryNext">
                             <i data-lucide="chevron-right"></i>
                         </button>
-                        <div class="gallery-counter" id="galleryCounter">1 / 3</div>
+                        <div class="gallery-counter" id="galleryCounter">1 / 1</div>
                     </div>
                     <div class="gallery-thumbs" id="galleryThumbs"></div>
                 </div>
 
-                <!-- Service info tabs -->
+                <!-- Info tabs -->
                 <div class="info-tabs">
                     <button class="info-tab active" data-tab="description">Description</button>
                     <button class="info-tab" data-tab="about">About the Pro</button>
@@ -109,7 +126,7 @@
                         <h2 class="section-title">About the Professional</h2>
                         <div class="provider-profile">
                             <div class="provider-profile-top">
-                                <img src="" alt="Provider" class="provider-profile-img" id="providerImg">
+                                <div class="provider-profile-avatar" id="providerAvatar"></div>
                                 <div class="provider-profile-info">
                                     <h3 id="providerFullName"></h3>
                                     <p class="provider-tagline" id="providerTagline"></p>
@@ -139,14 +156,16 @@
                 <!-- Reviews tab -->
                 <div class="tab-content hidden" id="tab-reviews">
                     <div class="section-card">
-                        <div class="reviews-header">
-                            <h2 class="section-title">Customer Reviews</h2>
-                            <div class="reviews-summary">
-                                <div class="reviews-score" id="reviewsScore"></div>
-                                <div class="reviews-breakdown" id="reviewsBreakdown"></div>
-                            </div>
+                        <h2 class="section-title">Customer Reviews</h2>
+                        <div class="reviews-summary">
+                            <div class="reviews-score" id="reviewsScore"></div>
+                            <div class="reviews-breakdown" id="reviewsBreakdown"></div>
                         </div>
                         <div class="reviews-list" id="reviewsList"></div>
+                        <div class="reviews-empty hidden" id="reviewsEmpty">
+                            <i data-lucide="star"></i>
+                            <p>No reviews yet for this service</p>
+                        </div>
                     </div>
                 </div>
 
@@ -155,6 +174,9 @@
                     <div class="section-card">
                         <h2 class="section-title">Frequently Asked Questions</h2>
                         <div class="faq-list" id="faqList"></div>
+                        <div class="faq-empty hidden" id="faqEmpty">
+                            <p>No FAQs available for this service yet.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -162,11 +184,9 @@
 
             <!-- ── RIGHT COLUMN (sticky) ── -->
             <div class="detail-right">
-
-                <!-- Service title card -->
                 <div class="sticky-wrap">
 
-                    <!-- Title & meta -->
+                    <!-- Service meta card -->
                     <div class="service-meta-card">
                         <div class="meta-top">
                             <span class="meta-category" id="metaCategory"></span>
@@ -181,18 +201,18 @@
                             <span class="meta-reviews" id="metaReviews"></span>
                         </div>
                         <div class="meta-provider-row">
-                            <img src="" alt="Provider" class="meta-provider-img" id="metaProviderImg">
+                            <div class="meta-provider-avatar" id="metaProviderAvatar"></div>
                             <span id="metaProviderName"></span>
                             <span class="pro-tag">Pro</span>
-                            <span class="meta-location" id="metaLocation">
+                            <span class="meta-location">
                                 <i data-lucide="map-pin"></i>
-                                <span></span>
+                                <span id="metaLocationText"></span>
                             </span>
                         </div>
                         <div class="meta-tags" id="metaTags"></div>
                     </div>
 
-                    <!-- Pricing tabs -->
+                    <!-- Pricing card -->
                     <div class="pricing-card">
                         <div class="pricing-tabs">
                             <button class="pricing-tab active" data-plan="basic">Basic</button>
@@ -215,23 +235,23 @@
                     </div>
 
                     <!-- Quick stats -->
-                    <div class="quick-stats">
+                    <div class="quick-stats-card">
                         <div class="quick-stat">
-                            <i data-lucide="clock"></i>
+                            <div class="qs-icon"><i data-lucide="clock"></i></div>
                             <div>
                                 <span class="qs-val" id="qsDelivery"></span>
                                 <span class="qs-key">Avg. Delivery</span>
                             </div>
                         </div>
                         <div class="quick-stat">
-                            <i data-lucide="repeat"></i>
+                            <div class="qs-icon"><i data-lucide="repeat"></i></div>
                             <div>
                                 <span class="qs-val" id="qsRepeat"></span>
                                 <span class="qs-key">Repeat Clients</span>
                             </div>
                         </div>
                         <div class="quick-stat">
-                            <i data-lucide="zap"></i>
+                            <div class="qs-icon"><i data-lucide="zap"></i></div>
                             <div>
                                 <span class="qs-val" id="qsResponse"></span>
                                 <span class="qs-key">Response Time</span>
@@ -239,17 +259,15 @@
                         </div>
                     </div>
 
-                </div><!-- /sticky-wrap -->
+                </div>
             </div><!-- /detail-right -->
 
-        </div><!-- /detail-inner -->
+        </div><!-- /detailContent -->
 
-        <!-- ── RELATED SERVICES ── -->
-        <div class="related-section">
-            <div class="related-inner">
-                <h2 class="related-title">You Might Also Like</h2>
-                <div class="related-grid" id="relatedGrid"></div>
-            </div>
+        <!-- Related services -->
+        <div class="related-section hidden" id="relatedSection">
+            <h2 class="related-title">You Might Also Like</h2>
+            <div class="related-grid" id="relatedGrid"></div>
         </div>
 
     </main>
@@ -276,10 +294,10 @@
                 <div class="footer-col">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="#">Home Cleaning</a></li>
-                        <li><a href="#">Plumbing</a></li>
-                        <li><a href="#">Electrical</a></li>
-                        <li><a href="#">Design</a></li>
+                        <li><a href="services.html?category=cleaning">Cleaning</a></li>
+                        <li><a href="services.html?category=repairs">Repairs</a></li>
+                        <li><a href="services.html?category=design">Design</a></li>
+                        <li><a href="services.html?category=tech">Tech & IT</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -296,8 +314,8 @@
                     <ul>
                         <li><a href="#">Help Center</a></li>
                         <li><a href="#">Safety</a></li>
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
@@ -307,9 +325,11 @@
         </div>
     </footer>
 
-    <!-- Booking Modal -->
+    <!-- ══════════════════════════════
+         BOOKING MODAL
+    ══════════════════════════════ -->
     <div class="modal-overlay hidden" id="modalOverlay">
-        <div class="modal" id="bookingModal">
+        <div class="modal">
             <div class="modal-header">
                 <h3>Book This Service</h3>
                 <button class="modal-close" id="modalClose">
@@ -317,46 +337,49 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="modal-plan-info" id="modalPlanInfo"></div>
+                <div class="modal-plan-summary" id="modalPlanSummary"></div>
                 <div class="form-group">
-                    <label class="form-label">Preferred Date</label>
+                    <label class="form-label" for="bookingDate">Preferred Date <span class="req">*</span></label>
                     <div class="input-wrap">
                         <i data-lucide="calendar" class="input-icon"></i>
-                        <input type="date" class="form-input" id="bookingDate">
+                        <input type="date" id="bookingDate" class="form-input icon-input">
                     </div>
+                    <p class="error-msg" id="bookingDateErr">Please select a date.</p>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Preferred Time</label>
+                    <label class="form-label" for="bookingTime">Preferred Time <span class="req">*</span></label>
                     <div class="input-wrap">
                         <i data-lucide="clock" class="input-icon"></i>
-                        <select class="form-input" id="bookingTime">
+                        <select id="bookingTime" class="form-input icon-input">
                             <option value="">Select a time slot</option>
-                            <option>8:00 AM - 10:00 AM</option>
-                            <option>10:00 AM - 12:00 PM</option>
-                            <option>12:00 PM - 2:00 PM</option>
-                            <option>2:00 PM - 4:00 PM</option>
-                            <option>4:00 PM - 6:00 PM</option>
+                            <option value="8am-10am">8:00 AM – 10:00 AM</option>
+                            <option value="10am-12pm">10:00 AM – 12:00 PM</option>
+                            <option value="12pm-2pm">12:00 PM – 2:00 PM</option>
+                            <option value="2pm-4pm">2:00 PM – 4:00 PM</option>
+                            <option value="4pm-6pm">4:00 PM – 6:00 PM</option>
                         </select>
                     </div>
+                    <p class="error-msg" id="bookingTimeErr">Please select a time slot.</p>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Your Address</label>
+                    <label class="form-label" for="bookingAddress">Your Address <span class="req">*</span></label>
                     <div class="input-wrap">
                         <i data-lucide="map-pin" class="input-icon"></i>
-                        <input type="text" class="form-input" placeholder="Enter your full address" id="bookingAddress">
+                        <input type="text" id="bookingAddress" class="form-input icon-input" placeholder="Enter your full address">
                     </div>
+                    <p class="error-msg" id="bookingAddressErr">Please enter your address.</p>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Additional Notes <span class="optional">(optional)</span></label>
-                    <textarea class="form-textarea" placeholder="Any special requirements or instructions..." id="bookingNotes" rows="3"></textarea>
+                    <label class="form-label" for="bookingNotes">Additional Notes <span class="optional">(optional)</span></label>
+                    <textarea id="bookingNotes" class="form-textarea" rows="3" placeholder="Any special requirements or instructions..."></textarea>
                 </div>
                 <div class="modal-total" id="modalTotal"></div>
             </div>
             <div class="modal-footer">
                 <button class="modal-cancel" id="modalCancel">Cancel</button>
                 <button class="modal-confirm" id="modalConfirm">
-                    <i data-lucide="check"></i>
-                    Confirm Booking
+                    <span class="btn-text">Confirm Booking</span>
+                    <div class="btn-spinner"></div>
                 </button>
             </div>
         </div>
@@ -368,7 +391,7 @@
         <span id="toastMsg"></span>
     </div>
 
-    <script src="js/servicedetail.js"></script>
+    <script src="js/service-detail.js"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

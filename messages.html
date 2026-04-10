@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - Messages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/messages.css">
+</head>
+<body>
+
+    <!-- ══════════════════════════════
+         NAVBAR
+    ══════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">KC</div>
+                <span class="nav-logo-text">KwikConnectHub</span>
+            </a>
+            <div class="nav-spacer"></div>
+            <div class="nav-right">
+                <div class="nav-avatar-wrap" id="navAvatarWrap">
+                    <div class="nav-avatar" id="navAvatar">U</div>
+                    <span class="nav-avatar-name" id="navAvatarName">User</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                    <div class="avatar-dropdown hidden" id="avatarDropdown">
+                        <a href="buyer-dashboard.html" class="dropdown-item">
+                            <i data-lucide="layout-dashboard"></i> Dashboard
+                        </a>
+                        <a href="profile-settings.html" class="dropdown-item">
+                            <i data-lucide="user"></i> Profile Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html" class="dropdown-item danger">
+                            <i data-lucide="log-out"></i> Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════
+         MESSAGES LAYOUT
+    ══════════════════════════════ -->
+    <div class="messages-layout">
+
+        <!-- ── CONVERSATIONS PANEL ── -->
+        <div class="conv-panel" id="convPanel">
+            <div class="conv-header">
+                <h2 class="conv-title">Messages</h2>
+                <button class="icon-btn" id="newMsgBtn" title="New conversation">
+                    <i data-lucide="edit-3"></i>
+                </button>
+            </div>
+
+            <div class="conv-search-wrap">
+                <i data-lucide="search" class="conv-search-icon"></i>
+                <input
+                    type="text"
+                    id="convSearch"
+                    class="conv-search-input"
+                    placeholder="Search conversations..."
+                >
+            </div>
+
+            <div class="conv-list" id="convList">
+                <!-- TODO: GET /api/messages/conversations -->
+            </div>
+
+            <div class="conv-empty hidden" id="convEmpty">
+                <i data-lucide="message-circle"></i>
+                <h3>No conversations yet</h3>
+                <p>Book a service to start chatting with providers</p>
+            </div>
+        </div>
+
+        <!-- ── CHAT PANEL ── -->
+        <div class="chat-panel" id="chatPanel">
+
+            <!-- Empty state (no conversation selected) -->
+            <div class="chat-empty-state" id="chatEmptyState">
+                <div class="chat-empty-icon">
+                    <i data-lucide="message-circle"></i>
+                </div>
+                <h3>Select a conversation</h3>
+                <p>Choose a conversation from the left panel to start messaging</p>
+            </div>
+
+            <!-- Active chat -->
+            <div class="chat-active hidden" id="chatActive">
+
+                <!-- Chat header -->
+                <div class="chat-header">
+                    <button class="back-btn hidden" id="backToConvs">
+                        <i data-lucide="arrow-left"></i>
+                    </button>
+                    <div class="chat-header-avatar" id="chatAvatar">U</div>
+                    <div class="chat-header-info">
+                        <div class="chat-name" id="chatName">—</div>
+                        <div class="chat-status" id="chatStatus">
+                            <span class="status-dot"></span>
+                            <span id="chatStatusText">—</span>
+                        </div>
+                    </div>
+                    <div class="chat-header-actions">
+                        <button class="icon-btn" title="Voice call" onclick="showToast('Voice call coming soon!')">
+                            <i data-lucide="phone"></i>
+                        </button>
+                        <button class="icon-btn" title="Video call" onclick="showToast('Video call coming soon!')">
+                            <i data-lucide="video"></i>
+                        </button>
+                        <button class="icon-btn" title="View order" id="viewOrderBtn">
+                            <i data-lucide="file-text"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages area -->
+                <div class="messages-area" id="messagesArea">
+                    <!-- TODO: GET /api/messages/conversation/:id -->
+                </div>
+
+                <!-- Typing indicator -->
+                <div class="typing-indicator hidden" id="typingIndicator">
+                    <span id="typingName">Someone</span> is typing
+                    <span class="typing-dots"><span></span><span></span><span></span></span>
+                </div>
+
+                <!-- Message input -->
+                <div class="message-input-wrap">
+                    <button class="icon-btn" id="attachBtn" title="Attach file">
+                        <i data-lucide="paperclip"></i>
+                    </button>
+                    <input type="file" id="fileAttach" class="hidden">
+
+                    <div class="msg-input-box">
+                        <input
+                            type="text"
+                            id="messageInput"
+                            class="msg-input"
+                            placeholder="Type a message..."
+                            autocomplete="off"
+                        >
+                        <button class="emoji-btn" id="emojiBtn" title="Emoji" onclick="showToast('Emoji picker coming soon!')">
+                            <i data-lucide="smile"></i>
+                        </button>
+                    </div>
+
+                    <button class="send-btn" id="sendBtn">
+                        <i data-lucide="send"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i data-lucide="check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="js/messages.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - My Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/buyer-dashboard.css">
+</head>
+<body>
+
+    <!-- ══════════════════════════════
+         NAVBAR
+    ══════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">KC</div>
+                <span class="nav-logo-text">KwikConnectHub</span>
+            </a>
+            <div class="nav-spacer"></div>
+            <div class="nav-right">
+                <button class="nav-icon-btn" id="notifBtn" title="Notifications">
+                    <i data-lucide="bell"></i>
+                    <span class="notif-dot hidden" id="notifDot"></span>
+                </button>
+                <a href="messages.html" class="nav-icon-btn" title="Messages">
+                    <i data-lucide="message-circle"></i>
+                </a>
+                <div class="nav-avatar-wrap" id="navAvatarWrap">
+                    <div class="nav-avatar" id="navAvatar">B</div>
+                    <span class="nav-avatar-name" id="navAvatarName">Buyer</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                    <div class="avatar-dropdown hidden" id="avatarDropdown">
+                        <a href="profile-settings.html" class="dropdown-item">
+                            <i data-lucide="user"></i> Profile Settings
+                        </a>
+                        <a href="messages.html" class="dropdown-item">
+                            <i data-lucide="message-circle"></i> Messages
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html" class="dropdown-item danger">
+                            <i data-lucide="log-out"></i> Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-mobile-btn" id="sidebarToggleBtn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="app-layout">
+
+        <!-- ══════════════════════════════
+             SIDEBAR
+        ══════════════════════════════ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-profile">
+                <div class="sidebar-avatar" id="sidebarAvatar">B</div>
+                <div class="sidebar-profile-info">
+                    <div class="sidebar-name" id="sidebarName">Buyer</div>
+                    <div class="sidebar-role">Customer</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="layout-dashboard"></i><span>Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="orders">
+                    <i data-lucide="shopping-bag"></i><span>My Orders</span>
+                    <span class="nav-badge hidden" id="ordersBadge">0</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="saved">
+                    <i data-lucide="heart"></i><span>Saved Services</span>
+                </a>
+                <a href="messages.html" class="sidebar-link">
+                    <i data-lucide="message-circle"></i><span>Messages</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="reviews">
+                    <i data-lucide="star"></i><span>My Reviews</span>
+                </a>
+                <div class="sidebar-divider"></div>
+                <a href="profile-settings.html" class="sidebar-link">
+                    <i data-lucide="settings"></i><span>Settings</span>
+                </a>
+                <a href="index.html" class="sidebar-link danger">
+                    <i data-lucide="log-out"></i><span>Sign Out</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Sidebar overlay (mobile) -->
+        <div class="sidebar-overlay hidden" id="sidebarOverlay"></div>
+
+        <!-- ══════════════════════════════
+             MAIN CONTENT
+        ══════════════════════════════ -->
+        <main class="dash-main">
+
+            <!-- ── OVERVIEW ── -->
+            <section class="dash-section active" id="section-overview">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title" id="welcomeTitle">Welcome back 👋</h1>
+                        <p class="page-subtitle">Manage your orders and saved services here.</p>
+                    </div>
+                    <a href="services.html" class="btn-primary">
+                        <i data-lucide="search"></i> Browse Services
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i data-lucide="shopping-bag"></i></div>
+                        <div>
+                            <div class="stat-label">Total Orders</div>
+                            <div class="stat-val" id="statTotal">—</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon amber"><i data-lucide="clock"></i></div>
+                        <div>
+                            <div class="stat-label">Pending</div>
+                            <div class="stat-val" id="statPending">—</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon emerald"><i data-lucide="check-circle"></i></div>
+                        <div>
+                            <div class="stat-label">Completed</div>
+                            <div class="stat-val" id="statCompleted">—</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i data-lucide="dollar-sign"></i></div>
+                        <div>
+                            <div class="stat-label">Total Spent</div>
+                            <div class="stat-val" id="statSpent">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="dash-card">
+                    <div class="dash-card-header">
+                        <h2 class="card-title">Recent Orders</h2>
+                        <button class="btn-ghost" onclick="switchSection('orders')">View All</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="dash-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Service</th>
+                                    <th>Provider</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersBody"></tbody>
+                        </table>
+                        <div class="empty-table hidden" id="recentOrdersEmpty">
+                            <i data-lucide="inbox"></i>
+                            <p>No orders yet. <a href="services.html">Browse services</a> to get started.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Services Preview -->
+                <div class="dash-card">
+                    <div class="dash-card-header">
+                        <h2 class="card-title">Saved Services</h2>
+                        <button class="btn-ghost" onclick="switchSection('saved')">View All</button>
+                    </div>
+                    <div class="saved-grid" id="savedGridPreview"></div>
+                    <div class="empty-table hidden" id="savedPreviewEmpty">
+                        <i data-lucide="heart"></i>
+                        <p>No saved services yet. <a href="services.html">Explore services</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── ORDERS ── -->
+            <section class="dash-section hidden" id="section-orders">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">My Orders</h1>
+                        <p class="page-subtitle">Track all your bookings and service orders</p>
+                    </div>
+                    <select class="select-sm" id="ordersFilter">
+                        <option value="all">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="dash-card">
+                    <div class="table-wrap">
+                        <table class="dash-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Service</th>
+                                    <th>Provider</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allOrdersBody"></tbody>
+                        </table>
+                        <div class="empty-table hidden" id="allOrdersEmpty">
+                            <i data-lucide="inbox"></i>
+                            <p>No orders found</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── SAVED SERVICES ── -->
+            <section class="dash-section hidden" id="section-saved">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">Saved Services</h1>
+                        <p class="page-subtitle">Services you've bookmarked for later</p>
+                    </div>
+                    <a href="services.html" class="btn-primary">
+                        <i data-lucide="search"></i> Explore More
+                    </a>
+                </div>
+                <div class="saved-grid" id="savedGridFull"></div>
+                <div class="empty-state hidden" id="savedFullEmpty">
+                    <i data-lucide="heart"></i>
+                    <h3>No saved services yet</h3>
+                    <p>Tap the heart icon on any service card to save it here</p>
+                    <a href="services.html" class="btn-primary">Browse Services</a>
+                </div>
+            </section>
+
+            <!-- ── MY REVIEWS ── -->
+            <section class="dash-section hidden" id="section-reviews">
+                <div class="section-header">
+                    <h1 class="page-title">My Reviews</h1>
+                    <p class="page-subtitle">Reviews you've left for service providers</p>
+                </div>
+                <div class="reviews-list" id="myReviewsList"></div>
+                <div class="empty-state hidden" id="myReviewsEmpty">
+                    <i data-lucide="star"></i>
+                    <h3>No reviews yet</h3>
+                    <p>Complete an order to leave your first review</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i data-lucide="check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="js/buyer-dashboard.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

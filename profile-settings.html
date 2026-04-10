@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - Profile Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/profile-settings.css">
+</head>
+<body>
+
+    <!-- ══════════════════════════════
+         NAVBAR
+    ══════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">KC</div>
+                <span class="nav-logo-text">KwikConnectHub</span>
+            </a>
+            <div class="nav-spacer"></div>
+            <div class="nav-right">
+                <div class="nav-avatar-wrap" id="navAvatarWrap">
+                    <div class="nav-avatar" id="navAvatar">U</div>
+                    <span class="nav-avatar-name" id="navAvatarName">User</span>
+                    <i data-lucide="chevron-down" class="nav-chevron"></i>
+                    <div class="avatar-dropdown hidden" id="avatarDropdown">
+                        <a href="buyer-dashboard.html" class="dropdown-item">
+                            <i data-lucide="layout-dashboard"></i> Dashboard
+                        </a>
+                        <a href="messages.html" class="dropdown-item">
+                            <i data-lucide="message-circle"></i> Messages
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="index.html" class="dropdown-item danger">
+                            <i data-lucide="log-out"></i> Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════
+         SETTINGS LAYOUT
+    ══════════════════════════════ -->
+    <div class="settings-layout">
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="settings-sidebar">
+            <div class="settings-profile-preview">
+                <div class="settings-avatar" id="settingsAvatar">U</div>
+                <div class="settings-name"  id="settingsName">User</div>
+                <div class="settings-email" id="settingsEmail">user@email.com</div>
+            </div>
+
+            <nav class="settings-nav">
+                <button class="settings-link active" data-tab="personal">
+                    <i data-lucide="user"></i><span>Personal Info</span>
+                </button>
+                <button class="settings-link" data-tab="security">
+                    <i data-lucide="shield"></i><span>Security</span>
+                </button>
+                <button class="settings-link" data-tab="notifications">
+                    <i data-lucide="bell"></i><span>Notifications</span>
+                </button>
+                <button class="settings-link" data-tab="payment">
+                    <i data-lucide="credit-card"></i><span>Payment Methods</span>
+                </button>
+                <button class="settings-link" data-tab="linked">
+                    <i data-lucide="link"></i><span>Linked Accounts</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- ── MAIN CONTENT ── -->
+        <main class="settings-main">
+
+            <!-- Personal Info -->
+            <section class="settings-section active" id="tab-personal">
+                <div class="settings-card">
+                    <h2 class="settings-title">Personal Information</h2>
+
+                    <div class="avatar-upload-wrap">
+                        <div class="avatar-upload-preview" id="avatarPreview">U</div>
+                        <div>
+                            <button class="btn-secondary" onclick="document.getElementById('avatarInput').click()">
+                                <i data-lucide="upload"></i> Upload Photo
+                            </button>
+                            <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                            <p class="field-hint">JPG or PNG, max 2MB</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name <span class="req">*</span></label>
+                            <input type="text" id="firstName" class="form-input" placeholder="First name" autocomplete="given-name">
+                            <p class="error-msg" id="firstNameErr">Required.</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name <span class="req">*</span></label>
+                            <input type="text" id="lastName" class="form-input" placeholder="Last name" autocomplete="family-name">
+                            <p class="error-msg" id="lastNameErr">Required.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address <span class="req">*</span></label>
+                        <div class="input-wrap">
+                            <i data-lucide="mail" class="input-icon"></i>
+                            <input type="email" id="email" class="form-input icon-input" placeholder="you@example.com" autocomplete="email">
+                        </div>
+                        <p class="error-msg" id="emailErr">Valid email required.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Phone Number</label>
+                        <div class="input-wrap">
+                            <i data-lucide="phone" class="input-icon"></i>
+                            <input type="tel" id="phone" class="form-input icon-input" placeholder="+234 800 000 0000" autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="location">Location</label>
+                        <div class="input-wrap">
+                            <i data-lucide="map-pin" class="input-icon"></i>
+                            <input type="text" id="location" class="form-input icon-input" placeholder="City, Country">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="bio">Bio <span class="optional">(optional)</span></label>
+                        <textarea id="bio" class="form-textarea" rows="4" placeholder="Tell providers a bit about yourself..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="savePersonalInfo()">
+                            <i data-lucide="save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Security -->
+            <section class="settings-section hidden" id="tab-security">
+                <div class="settings-card">
+                    <h2 class="settings-title">Security</h2>
+
+                    <h3 class="settings-subtitle">Change Password</h3>
+
+                    <div class="form-group">
+                        <label class="form-label" for="currentPw">Current Password</label>
+                        <div class="input-wrap">
+                            <i data-lucide="lock" class="input-icon"></i>
+                            <input type="password" id="currentPw" class="form-input icon-input" placeholder="Current password">
+                            <button class="pw-toggle" type="button" onclick="togglePw('currentPw', this)">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="newPw">New Password</label>
+                        <div class="input-wrap">
+                            <i data-lucide="lock" class="input-icon"></i>
+                            <input type="password" id="newPw" class="form-input icon-input" placeholder="Minimum 8 characters" oninput="checkPwStrength(this.value)">
+                            <button class="pw-toggle" type="button" onclick="togglePw('newPw', this)">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                        <div class="pw-strength hidden" id="pwStrength">
+                            <div class="pw-bars">
+                                <div class="pw-bar" id="bar1"></div>
+                                <div class="pw-bar" id="bar2"></div>
+                                <div class="pw-bar" id="bar3"></div>
+                                <div class="pw-bar" id="bar4"></div>
+                            </div>
+                            <span class="pw-strength-label" id="pwLabel">Password strength</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirmPw">Confirm New Password</label>
+                        <div class="input-wrap">
+                            <i data-lucide="lock" class="input-icon"></i>
+                            <input type="password" id="confirmPw" class="form-input icon-input" placeholder="Repeat new password">
+                            <button class="pw-toggle" type="button" onclick="togglePw('confirmPw', this)">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                        <p class="error-msg" id="confirmPwErr">Passwords do not match.</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="savePassword()">
+                            <i data-lucide="shield"></i> Update Password
+                        </button>
+                    </div>
+
+                    <div class="settings-divider"></div>
+
+                    <h3 class="settings-subtitle">Two-Factor Authentication</h3>
+                    <div class="tfa-wrap">
+                        <div>
+                            <div class="tfa-title">Enable 2FA</div>
+                            <div class="tfa-desc">Add an extra layer of security to your account</div>
+                        </div>
+                        <div class="toggle" id="tfaToggle" onclick="toggleTfa(this)">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications -->
+            <section class="settings-section hidden" id="tab-notifications">
+                <div class="settings-card">
+                    <h2 class="settings-title">Notification Preferences</h2>
+
+                    <div class="notif-group">
+                        <div class="notif-row">
+                            <div>
+                                <div class="notif-label">Email Notifications</div>
+                                <div class="notif-desc">Receive updates and alerts via email</div>
+                            </div>
+                            <div class="toggle" id="notifEmail" onclick="toggleNotif(this)">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="notif-row">
+                            <div>
+                                <div class="notif-label">SMS Notifications</div>
+                                <div class="notif-desc">Receive updates via text message</div>
+                            </div>
+                            <div class="toggle" id="notifSms" onclick="toggleNotif(this)">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="notif-row">
+                            <div>
+                                <div class="notif-label">Order Updates</div>
+                                <div class="notif-desc">Get notified when your order status changes</div>
+                            </div>
+                            <div class="toggle on" id="notifOrders" onclick="toggleNotif(this)">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="notif-row">
+                            <div>
+                                <div class="notif-label">New Messages</div>
+                                <div class="notif-desc">Get notified when you receive a message</div>
+                            </div>
+                            <div class="toggle on" id="notifMessages" onclick="toggleNotif(this)">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="notif-row">
+                            <div>
+                                <div class="notif-label">Promotional Emails</div>
+                                <div class="notif-desc">Receive deals, offers and platform news</div>
+                            </div>
+                            <div class="toggle" id="notifPromo" onclick="toggleNotif(this)">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="saveNotifications()">
+                            <i data-lucide="save"></i> Save Preferences
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Methods -->
+            <section class="settings-section hidden" id="tab-payment">
+                <div class="settings-card">
+                    <h2 class="settings-title">Payment Methods</h2>
+
+                    <div class="saved-cards" id="savedCards">
+                        <!-- TODO: GET /api/payment/methods -->
+                    </div>
+                    <div class="empty-state hidden" id="cardsEmpty">
+                        <i data-lucide="credit-card"></i>
+                        <p>No saved payment methods yet</p>
+                    </div>
+
+                    <button class="btn-secondary add-card-btn" onclick="addCard()">
+                        <i data-lucide="plus"></i> Add New Card
+                    </button>
+
+                    <div class="settings-divider"></div>
+
+                    <h3 class="settings-subtitle">Bank Account</h3>
+                    <div id="bankAccount">
+                        <!-- TODO: GET /api/payment/bank-account -->
+                    </div>
+                    <div class="empty-state hidden" id="bankEmpty">
+                        <i data-lucide="landmark"></i>
+                        <p>No bank account linked yet</p>
+                    </div>
+
+                    <button class="btn-secondary" onclick="addBank()">
+                        <i data-lucide="plus"></i> Link Bank Account
+                    </button>
+                </div>
+            </section>
+
+            <!-- Linked Accounts -->
+            <section class="settings-section hidden" id="tab-linked">
+                <div class="settings-card">
+                    <h2 class="settings-title">Linked Accounts</h2>
+
+                    <div class="linked-account-row">
+                        <div class="linked-account-info">
+                            <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                            </svg>
+                            <div>
+                                <div class="linked-name">Google</div>
+                                <div class="linked-status" id="googleStatus">Not connected</div>
+                            </div>
+                        </div>
+                        <button class="btn-link-toggle" id="googleBtn" onclick="toggleLinked('google', this)">Connect</button>
+                    </div>
+
+                    <div class="linked-account-row">
+                        <div class="linked-account-info">
+                            <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+                            </svg>
+                            <div>
+                                <div class="linked-name">Facebook</div>
+                                <div class="linked-status" id="facebookStatus">Not connected</div>
+                            </div>
+                        </div>
+                        <button class="btn-link-toggle" id="facebookBtn" onclick="toggleLinked('facebook', this)">Connect</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i data-lucide="check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="js/profile-settings.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

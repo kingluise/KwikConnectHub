@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KwikConnectHub - Page Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/404.css">
+</head>
+<body>
+
+    <!-- ══════════════════════════════
+         NAVBAR
+    ══════════════════════════════ -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">KC</div>
+                <span class="nav-logo-text">KwikConnectHub</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════
+         404 CONTENT
+    ══════════════════════════════ -->
+    <main class="not-found-main">
+        <div class="not-found-inner">
+
+            <!-- Graphic -->
+            <div class="not-found-graphic">
+                <div class="num">4</div>
+                <div class="zero-wrap">
+                    <i data-lucide="search-x"></i>
+                </div>
+                <div class="num">4</div>
+            </div>
+
+            <h1 class="not-found-title">Page Not Found</h1>
+
+            <p class="not-found-desc">
+                Oops! The page you're looking for doesn't exist or may have been moved.
+                Let's get you back on track.
+            </p>
+
+            <!-- Actions -->
+            <div class="not-found-actions">
+                <a href="index.html" class="btn-primary">
+                    <i data-lucide="home"></i> Back to Home
+                </a>
+                <a href="services.html" class="btn-secondary">
+                    <i data-lucide="search"></i> Browse Services
+                </a>
+            </div>
+
+            <!-- Quick links -->
+            <div class="not-found-suggestions">
+                <p>You might be looking for:</p>
+                <div class="suggestions-links">
+                    <a href="services.html">All Services</a>
+                    <a href="services.html?category=cleaning">Cleaning</a>
+                    <a href="services.html?category=repairs">Repairs</a>
+                    <a href="services.html?category=design">Design</a>
+                    <a href="auth.html">Sign In</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/404.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
