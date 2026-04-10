@@ -56,12 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── PASSWORD TOGGLE ──
     function togglePw(inputId, btn) {
         const input = document.getElementById(inputId);
+        if (!input) return;
         const isHidden = input.type === 'password';
         input.type = isHidden ? 'text' : 'password';
         btn.innerHTML = isHidden
             ? '<i data-lucide="eye-off" style="width:16px;height:16px;"></i>'
             : '<i data-lucide="eye" style="width:16px;height:16px;"></i>';
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     }
 
     window.togglePw = togglePw;
@@ -72,8 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const label = document.getElementById('pwLabel');
         const barIds = ['bar1', 'bar2', 'bar3', 'bar4'];
 
-        if (!value) {
-            strengthEl.classList.remove('show');
+        if (!value || !strengthEl) {
+            if (strengthEl) strengthEl.classList.remove('show');
             return;
         }
 
@@ -96,12 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         barIds.forEach((id, i) => {
             const bar = document.getElementById(id);
-            bar.className = 'pw-bar';
-            if (i < score) bar.classList.add(levels[score - 1]);
+            if (bar) {
+                bar.className = 'pw-bar';
+                if (i < score) bar.classList.add(levels[score - 1]);
+            }
         });
 
-        label.textContent = labels[score - 1] || 'Password strength';
-        label.style.color = colors[levels[score - 1]] || '#6b7280';
+        if (label) {
+            label.textContent = labels[score - 1] || 'Password strength';
+            label.style.color = colors[levels[score - 1]] || '#6b7280';
+        }
     }
 
     window.checkPasswordStrength = checkPasswordStrength;
@@ -113,7 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
         el.innerHTML = termsChecked
             ? '<i data-lucide="check" style="width:12px;height:12px;color:white;"></i>'
             : '';
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     }
 
     window.toggleCheck = toggleCheck;
@@ -127,11 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const input = document.getElementById(inputId);
         const err   = document.getElementById(errId);
         if (show) {
-            input.classList.add('error');
-            err.classList.add('show');
+            if (input) input.classList.add('error');
+            if (err) err.classList.add('show');
         } else {
-            input.classList.remove('error');
-            err.classList.remove('show');
+            if (input) input.classList.remove('error');
+            if (err) err.classList.remove('show');
         }
         return !show;
     }
@@ -170,6 +179,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    // ── TOAST NOTIFICATION (FIXED) ──
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const msg = document.getElementById('toastMsg');
+
+        if (!toast || !msg) {
+            console.error('Toast elements not found');
+            alert(message); // Fallback to alert
+            return;
+        }
+
+        // Find or create the icon element
+        let icon = toast.querySelector('i');
+        if (!icon) {
+            icon = document.createElement('i');
+            toast.insertBefore(icon, msg);
+        }
+
+        msg.textContent = message;
+        const iconName = type === 'error' ? 'alert-circle' : 'check-circle';
+        icon.setAttribute('data-lucide', iconName);
+        icon.style.color = type === 'error' ? '#f87171' : '#6ee7b7';
+
+        if (typeof lucide !== 'undefined' && lucide.createIcons) {
+            lucide.createIcons();
+        }
+
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
     // ── SIGN IN HANDLER ──
     function handleSignIn() {
         const email    = document.getElementById('signinEmail').value.trim();
@@ -181,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!valid) return;
 
         const btn = document.getElementById('signinBtn');
+        if (!btn) return;
         btn.classList.add('loading');
 
         setTimeout(() => {
@@ -199,20 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     role:  match.role
                 }));
                 showToast(`Welcome back, ${match.name.split(' ')[0]}! Redirecting...`);
-                setTimeout(() => { window.location.href = match.redirect; }, 1200);
+                setTimeout(() => {
+                    window.location.href = match.redirect;
+                }, 1200);
             } else {
                 setError('signinEmail',    'signinEmailErr',    true);
                 setError('signinPassword', 'signinPasswordErr', true);
-                document.getElementById('signinEmailErr').textContent    = 'Invalid email or password.';
-                document.getElementById('signinPasswordErr').textContent = 'Please check your credentials.';
+                const emailErrEl = document.getElementById('signinEmailErr');
+                const pwdErrEl = document.getElementById('signinPasswordErr');
+                if (emailErrEl) emailErrEl.textContent = 'Invalid email or password.';
+                if (pwdErrEl) pwdErrEl.textContent = 'Please check your credentials.';
                 showToast('Invalid email or password.', 'error');
             }
-
-            // TODO: Replace demo logic above with real API call:
-            // const res  = await fetch('/api/auth/signin', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ email, password }) });
-            // const data = await res.json();
-            // if (data.token) { localStorage.setItem('kch_token', data.token); window.location.href = data.role === 'provider' ? 'provider-dashboard.html' : 'buyer-dashboard.html'; }
-
         }, 1200);
     }
 
@@ -244,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!valid) return;
 
         const btn = document.getElementById('signupBtn');
+        if (!btn) return;
         btn.classList.add('loading');
 
         // Simulate API call
@@ -251,6 +291,13 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.remove('loading');
             const roleMsg = selectedRole === 'provider' ? 'as a Pro' : 'as a Buyer';
             showToast(`Account created ${roleMsg}! Welcome, ${firstName}!`);
+            // Switch to sign in tab after successful signup
+            setTimeout(() => {
+                switchTab('signin');
+                // Optionally pre-fill email
+                const emailField = document.getElementById('signinEmail');
+                if (emailField) emailField.value = email;
+            }, 1500);
         }, 2000);
     }
 
@@ -263,38 +310,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.socialLogin = socialLogin;
 
-    // ── TOAST NOTIFICATION ──
-    function showToast(message, type = 'success') {
-        const toast = document.getElementById('toast');
-        const msg   = document.getElementById('toastMsg');
-        const icon  = toast.querySelector('i');
-
-        msg.textContent = message;
-        icon.setAttribute('data-lucide', type === 'error' ? 'alert-circle' : 'check-circle');
-        icon.style.color = type === 'error' ? '#f87171' : '#6ee7b7';
-        lucide.createIcons();
-
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3500);
-    }
-
-    // Expose toast globally (useful for future pages too)
     // ── FILL DEMO CREDENTIALS ──
     function fillDemo(role) {
         const user = DEMO_USERS.find(u => u.role === role);
         if (!user) return;
-        document.getElementById('signinEmail').value    = user.email;
-        document.getElementById('signinPassword').value = user.password;
+
+        const emailField = document.getElementById('signinEmail');
+        const pwdField = document.getElementById('signinPassword');
+
+        if (emailField) emailField.value = user.email;
+        if (pwdField) pwdField.value = user.password;
+
         // Clear any existing errors
-        ['signinEmail','signinPassword'].forEach(id => {
-            document.getElementById(id).classList.remove('error');
+        ['signinEmail', 'signinPassword'].forEach(id => {
+            const field = document.getElementById(id);
+            if (field) field.classList.remove('error');
             const errEl = document.getElementById(id + 'Err');
             if (errEl) errEl.classList.remove('show');
         });
+
         showToast('Demo credentials filled. Click Sign In!');
     }
-    window.fillDemo = fillDemo;
 
+    window.fillDemo = fillDemo;
     window.showToast = showToast;
 
     console.log('🚀 KwikConnectHub Auth loaded successfully!');
